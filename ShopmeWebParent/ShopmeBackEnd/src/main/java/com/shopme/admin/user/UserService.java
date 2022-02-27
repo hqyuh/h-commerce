@@ -42,4 +42,15 @@ public class UserService {
         user.setPassword(encodedPassword);
     }
 
+    /**
+     * check email exists
+     *
+     * If email exists, return false otherwise return true
+     * */
+    public boolean isEmailUnique(String email) {
+        User userByEmail = userRepo.getUserByEmail(email);
+
+        return userByEmail == null;
+    }
+
 }

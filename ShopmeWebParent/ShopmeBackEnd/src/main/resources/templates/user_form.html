@@ -60,7 +60,7 @@
     <form th:action="@{/users/save}"
           method="post"
           style="max-width: 700px; margin: 0 auto"
-          th:object="${user}">
+          th:object="${user}" onsubmit="return checkEmailUnique(this)">
     <div class="border border-secondary rounded p-3">
         <!-- Email -->
         <div class="form-group row">
@@ -145,6 +145,24 @@
         </div>
     </div>
     </form>
+    
+    <!-- dialog -->
+    <div class="modal fade text-center" id="modalDialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Warning</h4>
+                    <button type="button" class="close" data-dimiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <span id="modalBody"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dimiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="text-center">
         <p>Shopme Control Panel - Copyright &copy; Shopme</p>
@@ -152,11 +170,40 @@
 
     <!-- javascript -->
     <script type="application/javascript">
+        
         $(document).ready(() => {
             $('#buttonCancel').on('click', () => {
                 window.location = "[[@{/users}]]"
             });
         });
+        
+        const checkEmailUnique = (form) => {
+            const url = '[[@{/users/check_email}]]';
+            const userEmail = $('#email').val();
+            const csrfValue = $("input[name='_csrf']").val();
+            const params = { email: userEmail, _csrf: csrfValue };
+    
+            // $.post(url, data, function())
+            $.post(url, params, (response) => {
+                if(response === 'OK') {
+                    form.submit();
+                } else if(response === 'Duplicated') {
+                    showModalDialog('Warning', 'There is another user having the email ' + userEmail);
+                } else {
+                    showModalDialog('Error', 'Unknown response from server');
+                }
+            }).fail(() => showModalDialog('Error', 'Could not connect to the server'));
+            
+            return false;
+        }
+        
+        const showModalDialog = (title, message) => {
+            $('#modalTitle').text(title);
+            $('#modalBody').text(message);
+            // show dialog
+            $('#modalDialog').modal();
+        }
+        
     </script>
 
 </body>
