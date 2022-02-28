@@ -61,6 +61,7 @@
           method="post"
           style="max-width: 700px; margin: 0 auto"
           th:object="${user}" onsubmit="return checkEmailUnique(this)">
+        <input type="hidden" th:field="*{id}">
     <div class="border border-secondary rounded p-3">
         <!-- Email -->
         <div class="form-group row">
@@ -99,9 +100,13 @@
         <div class="form-group row">
             <label class="col-sm-4 col-form-label">Password</label>
             <div class="col-sm-8">
-                <input type="password"
+                <input th:if="${user.id == null}" type="password"
                        class="form-control" th:field="*{password}"
                        required minlength="2" maxlength="20"
+                >
+                <input th:if="${user.id != null}" type="password"
+                       class="form-control" th:field="*{password}"
+                       minlength="2" maxlength="20"
                 >
             </div>
         </div>
@@ -180,8 +185,9 @@
         const checkEmailUnique = (form) => {
             const url = '[[@{/users/check_email}]]';
             const userEmail = $('#email').val();
+            const userId = $('#id').val();
             const csrfValue = $("input[name='_csrf']").val();
-            const params = { email: userEmail, _csrf: csrfValue };
+            const params = { id: userId, email: userEmail, _csrf: csrfValue };
     
             // $.post(url, data, function())
             $.post(url, params, (response) => {

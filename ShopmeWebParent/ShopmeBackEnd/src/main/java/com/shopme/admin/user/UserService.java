@@ -34,7 +34,21 @@ public class UserService {
     }
 
     public void save(User user) {
-        encodePassword(user);
+        boolean isUpdatingUser = (user.getId() != null);
+
+        if(isUpdatingUser) {
+            User existingUser = userRepo.findById(user.getId()).get();
+
+            if(user.getPassword().isEmpty()) {
+                user.setPassword(existingUser.getPassword());
+            } else {
+                // new password
+                encodePassword(user);
+            }
+        } else {
+            // add new user
+            encodePassword(user);
+        }
         userRepo.save(user);
     }
 
@@ -48,10 +62,23 @@ public class UserService {
      *
      * If email exists, return false otherwise return true
      * */
-    public boolean isEmailUnique(String email) {
+    public boolean isEmailUnique(Integer id, String email) {
         User userByEmail = userRepo.getUserByEmail(email);
 
-        return userByEmail == null;
+        // if email not in database
+        if(userByEmail == null) return true;
+
+        // if id does not exist in the database then return false
+        boolean isCreatingNew = (id == null);
+        if(isCreatingNew) {
+            return false;
+        } else {
+            // if id exists
+            if(userByEmail.getId() != id) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public User getUser(Integer id) throws UserNotFoundException {
