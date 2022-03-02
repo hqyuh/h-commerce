@@ -35,4 +35,26 @@ public class FileUpLoadUtil {
         }
     }
 
+    // clear directory
+    public static void clearDir(String dir) {
+        Path dirPath = Paths.get(dir);
+
+        try {
+            Files.list(dirPath).forEach(file -> {
+                // isisDirectory
+                // Check if the specified path
+                // is a directory or not
+                if(!Files.isDirectory(file)) {
+                    try {
+                        Files.delete(file);
+                    } catch (IOException ex) {
+                        System.out.println("Could not delete file: " + file);
+                    }
+                }
+            });
+        } catch (IOException ex) {
+            System.out.println("Could not dist directory: " + dirPath);
+        }
+    }
+
 }
