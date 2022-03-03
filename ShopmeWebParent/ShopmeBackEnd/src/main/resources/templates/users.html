@@ -65,18 +65,31 @@
     <div th:if="${message != null}" class="alert alert-success text-center">
         [[${message}]]
     </div>
+
+    <!-- search -->
+    <form th:action="@{/users/page/1}" class="form-inline m-3">
+        <input type="hidden" name="sortField" th:value="${sortField}">
+        <input type="hidden" name="sortDir" th:value="${sortDir}">
     
-    <div>
+        Filter: &nbsp;
+        <input type="search" name="keyword" th:value="${keyword}" class="form-control" required>
+        &nbsp;&nbsp;
+        <input type="submit" value="Search" class="btn btn-primary">
+        &nbsp;&nbsp;
+        <input type="button" value="Clear" class="btn btn-secondary" onclick="clearFilter()">
+    </form>
+    
+    <div th:if="${totalItems > 0}">
         <table class="table table-responsive-xl table-bordered table-striped table-hover">
             <thead class="thead-dark">
                 <tr>
                     <th>
                         <a th:if="${sortField != 'id'}" class="text-white"
-                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir}}">
+                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
                             User ID
                         </a>
                         <a th:if="${sortField == 'id'}" class="text-white"
-                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir}}">
+                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
                             User ID
                         </a>
                         <span th:if="${sortField == 'id'}"
@@ -86,11 +99,11 @@
                     <th>Photos</th>
                     <th>
                         <a th:if="${sortField != 'email'}" class="text-white"
-                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir}}">
+                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
                             Email
                         </a>
                         <a th:if="${sortField == 'email'}" class="text-white"
-                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}">
+                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
                             Email
                         </a>
                         <span th:if="${sortField == 'email'}"
@@ -99,11 +112,11 @@
                     </th>
                     <th>
                         <a th:if="${sortField != 'firstName'}" class="text-white"
-                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir}}">
+                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
                             First Name
                         </a>
                         <a th:if="${sortField == 'firstName'}" class="text-white"
-                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir}}">
+                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=firstName&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
                             First Name
                         </a>
                         <span th:if="${sortField == 'firstName'}"
@@ -112,11 +125,11 @@
                     </th>
                     <th>
                         <a th:if="${sortField != 'lastName'}" class="text-white"
-                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${sortDir}}">
+                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
                             Last Name
                         </a>
                         <a th:if="${sortField == 'lastName'}" class="text-white"
-                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">
+                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=lastName&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
                             Last Name
                         </a>
                         <span th:if="${sortField == 'lastName'}"
@@ -126,11 +139,11 @@
                     <th>Roles</th>
                     <th>
                         <a th:if="${sortField != 'enabled'}" class="text-white"
-                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${sortDir}}">
+                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
                             Enabled
                         </a>
                         <a th:if="${sortField == 'enabled'}" class="text-white"
-                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${reverseSortDir}}">
+                           th:href="@{'/users/page/' + ${currentPage} + '?sortField=enabled&sortDir=' + ${reverseSortDir} + ${keyword != null ? '&keyword=' + keyword : ' '}}">
                             Enabled
                         </a>
                         <span th:if="${sortField == 'enabled'}"
@@ -263,6 +276,11 @@
                 $('#confirmModal').modal();
             });
         });
+
+        // clear filter
+        const clearFilter = () => {
+            window.location = "[[@{/users}]]";
+        }
     </script>
 
 </body>

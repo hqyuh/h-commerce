@@ -34,15 +34,16 @@ public class UserController {
         // model.addAttribute("listUsers", listUsers);
         // return "users";
 
-        return listByPage(1, model, "id", "asc");
+        return listByPage(1, model, "id", "asc", null);
     }
 
     @GetMapping("/users/page/{pageNum}")
     public String listByPage(@PathVariable(name = "pageNum") int pageNum,
                              Model model,
                              String sortField,
-                             String sortDir) {
-        Page<User> page = service.listByPage(pageNum, sortField, sortDir);
+                             String sortDir,
+                             String keyword) {
+        Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword);
         List<User> listUsers = page.getContent();
 
         long startCount = (long) (pageNum - 1) * UserService.USERS_PER_PAGE + 1;
@@ -56,6 +57,7 @@ public class UserController {
 
         String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
 
+        model.addAttribute("keyword", keyword);
         model.addAttribute("reverseSortDir", reverseSortDir);
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
