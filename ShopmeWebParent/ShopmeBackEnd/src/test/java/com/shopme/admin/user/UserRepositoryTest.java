@@ -15,9 +15,10 @@ import org.springframework.test.annotation.Rollback;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.*;
 
 @DataJpaTest(showSql = false)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(value = false)
 public class UserRepositoryTest {
 
@@ -34,8 +35,9 @@ public class UserRepositoryTest {
         User userHuyHQ = new User(
                 "hoquang.huyy@gmail.com",
                 "123456",
-                "Hồ",
-                "Quang Huy");
+                "Ho",
+                "Quang Huy"
+        );
         userHuyHQ.addRole(roleAdmin);
         User savedUser = repo.save(userHuyHQ);
         assertThat(savedUser.getId()).isGreaterThan(0);
@@ -43,7 +45,12 @@ public class UserRepositoryTest {
 
     @Test
     public void testCreateNewUserWithTwoRole() {
-        User userRavi = new User("ravi@gmail.com", "ravi2021", "Ravi", "Kumar");
+        User userRavi = new User(
+                "ravi@gmail.com",
+                "ravi2021",
+                "Ravi",
+                "Kumar"
+        );
         Role roleEditor = new Role(3);
         Role roleAssistant = new Role(5);
         userRavi.addRole(roleEditor);
@@ -110,13 +117,13 @@ public class UserRepositoryTest {
     @Test
     public void testDisabledUser() {
         Integer id = 7;
-        repo.updateEnabledStatus(7, false);
+        repo.updateEnabledStatus(id, false);
     }
 
     @Test
     public void testEnabledUser() {
         Integer id = 7;
-        repo.updateEnabledStatus(7, true);
+        repo.updateEnabledStatus(id, true);
     }
 
     @Test

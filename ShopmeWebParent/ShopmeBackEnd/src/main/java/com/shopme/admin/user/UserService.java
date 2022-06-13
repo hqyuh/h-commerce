@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -97,11 +98,8 @@ public class UserService {
             return false;
         } else {
             // if id exists
-            if(userByEmail.getId() != id) {
-                return false;
-            }
+            return Objects.equals(userByEmail.getId(), id);
         }
-        return true;
     }
 
     public User getUser(Integer id) throws UserNotFoundException {

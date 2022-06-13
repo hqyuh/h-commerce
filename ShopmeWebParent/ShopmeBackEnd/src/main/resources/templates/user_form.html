@@ -64,7 +64,8 @@
     <form th:action="@{/users/save}"
           method="post"
           style="max-width: 700px; margin: 0 auto"
-          th:object="${user}" onsubmit="return checkEmailUnique(this)"
+          th:object="${user}"
+          onsubmit="return checkEmailUnique(this)"
           enctype="multipart/form-data"> <!-- up image -->
         <input type="hidden" th:field="*{id}">
     <div class="border border-secondary rounded p-3">

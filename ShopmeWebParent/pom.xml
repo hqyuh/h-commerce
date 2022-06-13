@@ -73,6 +73,7 @@
             <artifactId>webjars-locator-core</artifactId>
         </dependency>
 
+        <!--  -->
         <dependency>
             <groupId>com.shopme</groupId>
             <artifactId>ShopmeCommon</artifactId>
