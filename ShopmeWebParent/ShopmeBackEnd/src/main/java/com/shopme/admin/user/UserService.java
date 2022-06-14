@@ -88,14 +88,13 @@ public class UserService {
      * */
     public boolean isEmailUnique(Integer id, String email) {
         User userByEmail = userRepo.getUserByEmail(email);
-
         // if email not in database
-        if(userByEmail == null) return true;
-
+        if(userByEmail == null)
+            return true;
         // if id does not exist in the database then return false
         boolean isCreatingNew = (id == null);
         if(isCreatingNew) {
-            return false;
+            return userByEmail == null;
         } else {
             // if id exists
             return Objects.equals(userByEmail.getId(), id);

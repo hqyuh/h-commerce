@@ -12,22 +12,26 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends PagingAndSortingRepository<User, Integer> {
 
-    @Query("SELECT u FROM User u WHERE u.email = :email")
-    public User getUserByEmail(@Param("email") String email);
+    @Query("SELECT u " +
+           "FROM User u " +
+           "WHERE u.email = :email")
+    User getUserByEmail(@Param("email") String email);
 
-    public Long countById(Integer id);
+    Long countById(Integer id);
 
     /**
      * update enabled
      * modifying allows INSERT, UPDATE, DELETE, and even DDL queries.
      * */
-    @Query("UPDATE User u SET u.enabled = ?2 WHERE u.id = ?1")
+    @Query("UPDATE User u " +
+           "SET u.enabled = ?2 " +
+           "WHERE u.id = ?1")
     @Modifying
-    public void updateEnabledStatus(Integer id, boolean enabled);
+    void updateEnabledStatus(Integer id, boolean enabled);
 
     @Query("SELECT u " +
-            "FROM User u " +
-            "WHERE CONCAT(u.id, ' ', u.email, ' ', u.firstName, ' ', u.lastName) LIKE %?1%")
-    public Page<User> findAll(String keyword, Pageable pageable);
+           "FROM User u " +
+           "WHERE CONCAT(u.id, ' ', u.email, ' ', u.firstName, ' ', u.lastName) LIKE %?1%")
+    Page<User> findAll(String keyword, Pageable pageable);
 
 }
