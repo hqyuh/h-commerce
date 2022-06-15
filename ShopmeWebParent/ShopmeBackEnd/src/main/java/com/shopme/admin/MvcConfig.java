@@ -10,15 +10,12 @@ import java.nio.file.Paths;
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
-
     /**
      * map the path of the request (URI) to
      * the absolute path of the directory on the server.
     * */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-
         String dirName = "user-photos";
         Path userPhotoDir = Paths.get(dirName);
 

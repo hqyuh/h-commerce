@@ -92,7 +92,7 @@ public class UserController {
 
         // System.out.println(multipartFile.getOriginalFilename()); // photo name
 
-        if(!multipartFile.isEmpty()) {
+        if (!multipartFile.isEmpty()) {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             user.setPhotos(fileName);
             User savedUser = service.save(user);
@@ -102,8 +102,9 @@ public class UserController {
             FileUpLoadUtil.clearDir(uploadDir);
             FileUpLoadUtil.saveFile(uploadDir, fileName, multipartFile);
         } else {
-            if(user.getPhotos().isEmpty())
+            if (user.getPhotos().isEmpty()) {
                 user.setPhotos(null);
+            }
             service.save(user);
         }
 

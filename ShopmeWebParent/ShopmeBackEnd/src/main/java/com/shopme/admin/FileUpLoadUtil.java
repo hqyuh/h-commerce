@@ -9,11 +9,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 public class FileUpLoadUtil {
 
     public static void saveFile(String uploadDir,
                                 String fileName,
-                                MultipartFile multipartFile) throws IOException {
+                                MultipartFile multipartFile)
+            throws IOException {
         // file name
         Path uploadPath = Paths.get(uploadDir);
 
@@ -21,7 +24,6 @@ public class FileUpLoadUtil {
             // create file
             Files.createDirectories(uploadPath);
         }
-
         // get input stream from multipartFile
         try (InputStream inputStream = multipartFile.getInputStream()) {
             // call resolve() to create resolved Path
@@ -29,7 +31,7 @@ public class FileUpLoadUtil {
 
             // REPLACE_EXISTING – replace a file if it exists
             // Files.copy(source, target, ...)
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(inputStream, filePath, REPLACE_EXISTING);
         } catch (IOException ex) {
             throw new IOException("Could not save file: " + fileName, ex);
         }

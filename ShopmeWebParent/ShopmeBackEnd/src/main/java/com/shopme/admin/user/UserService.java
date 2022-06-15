@@ -60,6 +60,7 @@ public class UserService {
     public User save(User user) {
         boolean isUpdatingUser = (user.getId() != null);
 
+        // if user exists in data
         if(isUpdatingUser) {
             User existingUser = userRepo.findById(user.getId()).get();
 
@@ -89,15 +90,15 @@ public class UserService {
     public boolean isEmailUnique(Integer id, String email) {
         User userByEmail = userRepo.getUserByEmail(email);
         // if email not in database
-        if(userByEmail == null)
+        if (userByEmail == null)
             return true;
         // if id does not exist in the database then return false
         boolean isCreatingNew = (id == null);
-        if(isCreatingNew) {
-            return userByEmail == null;
+        if (isCreatingNew) {
+            return userByEmail == null; // false
         } else {
-            // if id exists
-            return Objects.equals(userByEmail.getId(), id);
+            // if id exists in database
+            return Objects.equals(userByEmail.getId(), id); // false
         }
     }
 

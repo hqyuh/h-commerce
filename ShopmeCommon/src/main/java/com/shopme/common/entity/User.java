@@ -77,7 +77,7 @@ public class User {
                 '}';
     }
 
-    @Transactional
+    @Transient
     public String getPhotosImagePath() {
         if(id == null || photos == null)
             return "/images/default-user.png";
