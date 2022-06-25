@@ -62,6 +62,7 @@ public class UserPdfExporter extends AbstractExporter {
 
         Document document = new Document(PageSize.A4);
 
+        // initialize a PdfWriter passing document and response
         PdfWriter.getInstance(document, response.getOutputStream());
 
         document.open();
@@ -82,7 +83,9 @@ public class UserPdfExporter extends AbstractExporter {
         table.setSpacingBefore(10);
         table.setWidths(new float[] { 1.2f, 4.5f, 2.3f, 2.3f, 3.0f, 1.7f });
 
+        // set Header
         writeTableHeader(table);
+        // set data
         writeTableData(table, listUsers);
 
         document.add(table);

@@ -93,7 +93,9 @@ public class UserExcelExporter extends AbstractExporter {
 
         super.setResponseHeader(response, "application/octet-stream", ".xlsx");
 
+        // set Header
         writeHeaderLine();
+        // set data in line
         writeDataLines(listUsers);
 
         ServletOutputStream outputStream = response.getOutputStream();

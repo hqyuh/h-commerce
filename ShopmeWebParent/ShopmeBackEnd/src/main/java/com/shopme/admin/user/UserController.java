@@ -34,7 +34,6 @@ public class UserController {
         // List<User> listUsers = service.listAll();
         // model.addAttribute("listUsers", listUsers);
         // return "users";
-
         return listByPage(1, model, "id", "asc", null);
     }
 

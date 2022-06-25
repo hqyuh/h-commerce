@@ -129,7 +129,7 @@ public class UserRepositoryTest {
     @Test
     public void testListFirstPage() {
         int pageNumber = 0;
-        int pageSize = 3;
+        int pageSize = 2;
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         Page<User> page = repo.findAll(pageable);

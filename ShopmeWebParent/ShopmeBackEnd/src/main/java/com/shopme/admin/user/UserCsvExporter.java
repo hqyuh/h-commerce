@@ -3,11 +3,12 @@ package com.shopme.admin.user;
 import com.shopme.common.entity.User;
 import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
-import org.supercsv.prefs.CsvPreference;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+
+import static org.supercsv.prefs.CsvPreference.STANDARD_PREFERENCE;
 
 public class UserCsvExporter extends AbstractExporter {
 
@@ -15,8 +16,7 @@ public class UserCsvExporter extends AbstractExporter {
 
         super.setResponseHeader(response, "text/csv", ".csv");
 
-        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(),
-                CsvPreference.STANDARD_PREFERENCE);
+        ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(), STANDARD_PREFERENCE);
 
         String[] csvHeader = {"UserID", "Email", "First Name", "Last Name", "Roles", "Enabled"};
         String[] fieldMapping = {"id", "email", "firstName", "lastName", "roles", "enabled"};
