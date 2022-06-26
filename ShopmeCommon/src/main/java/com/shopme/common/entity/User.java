@@ -37,7 +37,8 @@ public class User {
 
     private boolean enabled;
 
-    @ManyToMany
+    // select object from database then it will not get related objects
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             // intermediate table
             name = "users_roles",
