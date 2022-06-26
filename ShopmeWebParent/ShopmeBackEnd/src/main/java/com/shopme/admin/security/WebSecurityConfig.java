@@ -59,6 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // bypass authentication
         web.ignoring()
-           .antMatchers("/images/**", "/js/**", "/webjars/**", "/css/**", "/fontawesome/**");
+           .antMatchers("/images/**", "/webjars/**",
+                   "/css/**", "/fontawesome/**", "/js/**");
     }
 }
