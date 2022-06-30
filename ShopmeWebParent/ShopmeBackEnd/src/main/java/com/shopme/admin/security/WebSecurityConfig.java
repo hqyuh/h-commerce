@@ -52,7 +52,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
             .and()
                 .logout()
-                .permitAll();
+                .permitAll()
+            .and()
+                .rememberMe()
+                .key("AbcDefghijmnOpqrs_123456789")
+                .tokenValiditySeconds(7 * 24 * 60 *60);
     }
 
     @Override
