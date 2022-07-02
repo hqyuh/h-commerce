@@ -127,87 +127,9 @@
         </div>
     </div>
     </form>
-    
-    <!-- dialog -->
-    <div class="modal fade text-center" id="modalDialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="modalTitle">Warning</h4>
-                    <button type="button" class="close" data-dimiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <span id="modalBody"></span>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dimiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <!-- javascript -->
     <script type="application/javascript">
-        
-        $(document).ready(() => {
-            $('#buttonCancel').on('click', () => {
-                window.location = "[[@{/users}]]"
-            });
-            
-            $('#fileImage').change(function () {
-                const fileSize = this.files[0].size;
-                
-                if(fileSize > 1048576) {
-                    this.setCustomValidity('You must choose an image less than 1MB');
-                    this.reportValidity();
-                } else {
-                    showImageThumbnail(this);
-                }
-            })
-        });
-        
-        // get object from input file
-        const showImageThumbnail = (fileInput) => {
-            // array
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-            // onload: after successfully loaded
-            reader.onload = function (e) {
-                $('#thumbnail').attr('src', e.target.result);
-            }
-            // read binary data and encode it as base64 data url
-            reader.readAsDataURL(file);
-        }
-        
-        const checkEmailUnique = (form) => {
-            const url = '[[@{/users/check_email}]]';
-            const userEmail = $('#email').val();
-            const userId = $('#id').val();
-            const csrfValue = $("input[name='_csrf']").val();
-            const params = { id: userId, email: userEmail, _csrf: csrfValue };
-    
-            // $.post(url, data, function())
-            $.post(url, params, (response) => {
-                if(response === 'OK') {
-                    form.submit();
-                } else if(response === 'Duplicated') {
-                    showModalDialog('Warning', 'There is another user having the email ' + userEmail);
-                } else {
-                    showModalDialog('Error', 'Unknown response from server');
-                }
-            }).fail(() => showModalDialog('Error', 'Could not connect to the server'));
-            
-            return false;
-        }
-        
-        const showModalDialog = (title, message) => {
-            $('#modalTitle').text(title);
-            $('#modalBody').text(message);
-            // show dialog
-            $('#modalDialog').modal();
-        }
-
         const checkPasswordMatch = (confirmPassword) => {
             if (confirmPassword.value !== $("#password").val()) {
                 confirmPassword.setCustomValidity('Password do not match!');
@@ -215,9 +137,9 @@
                 confirmPassword.setCustomValidity('');
             }
         }
-
-        
     </script>
+
+    <script th:src="@{/js/common_form.js}"></script>
 
 </body>
 </html>
