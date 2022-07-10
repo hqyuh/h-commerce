@@ -28,11 +28,12 @@ public class CategoryService {
         Iterable<Category> categoriesInDB = categoryRepo.findAll();
         for (Category rootCategory : categoriesInDB) {
             if (rootCategory.getParent() == null) {
+                categoriesUsedInForm.add(Category.copyIdAndName(rootCategory));
                 // children
                 Set<Category> parent = rootCategory.getChildren();
                 for (Category subCategory : parent) {
                    String name = "--" + subCategory.getName();
-                   categoriesUsedInForm.add(new Category(name));
+                   categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
                    listChildHierarchicalCategories(categoriesUsedInForm, subCategory, 1);
                 }
             }
@@ -48,11 +49,13 @@ public class CategoryService {
         Set<Category> child = parent.getChildren();
         for (Category subCategory : child) {
             String name = "--".repeat(Math.max(0, newSubLevel)) + subCategory.getName();
-            categoriesUsedInForm.add(new Category(name));
+            categoriesUsedInForm.add(Category.copyIdAndName(subCategory.getId(), name));
             listChildHierarchicalCategories(categoriesUsedInForm, subCategory, newSubLevel);
         }
     }
 
-
+    public Category saveCategory(Category category) {
+        return categoryRepo.save(category);
+    }
 
 }

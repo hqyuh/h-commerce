@@ -8,7 +8,7 @@
     <div>
         <h2>Manage Categories</h2>
         <a th:href="@{/categories/new}"
-           class="fas fa-user-plus fa-2x icon-dark mr-2"></a>
+           class="fas fa-folder-plus fa-2x icon-dark mr-2"></a>
         <a th:href="@{/categories/export/csv}"
            class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
     </div>
@@ -51,9 +51,15 @@
                 <td>[[${cat.name}]]</td>
                 <td>[[${cat.alias}]]</td>
                 <td>
-                    <a class="fas fa-circle fa-2x icon-dark"
+                    <a th:if="${cat.enabled == true}"
+                       class="fas fa-check-circle fa-2x icon-green"
                        href=""
-                       title="">
+                       title="Disable this item">
+                    </a>
+                    <a th:if="${cat.enabled == false}"
+                       class="fas fa-check-circle fa-2x icon-dark"
+                       href=""
+                       title="Enabled this item">
                     </a>
                 </td>
                 <td>

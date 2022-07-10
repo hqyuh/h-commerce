@@ -130,6 +130,9 @@
 
     <!-- javascript -->
     <script type="application/javascript">
+
+        const moduleURL = '[[@{/users}]]';
+
         const checkPasswordMatch = (confirmPassword) => {
             if (confirmPassword.value !== $("#password").val()) {
                 confirmPassword.setCustomValidity('Password do not match!');
