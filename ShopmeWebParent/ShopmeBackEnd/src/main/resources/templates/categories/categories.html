@@ -47,7 +47,9 @@
             <tbody>
             <tr th:each="cat : ${listCategories}">
                 <td>[[${cat.id}]]</td>
-                <td>Image</td>
+                <td>
+                    <img th:src="@{${cat.imagePath}}" alt="" style="width: 100px" class="img-fluid">
+                </td>
                 <td>[[${cat.name}]]</td>
                 <td>[[${cat.alias}]]</td>
                 <td>

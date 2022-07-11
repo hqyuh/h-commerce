@@ -1,7 +1,6 @@
 package com.shopme.admin.category;
 
 import com.shopme.common.entity.Category;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.*;
 
 @DataJpaTest(showSql = false)
@@ -86,4 +84,11 @@ class CategoryRepositoryTest {
             printChildren(subCategory, newSubLevel);
         }
     }
+
+    @Test
+    public void testListRootCategories() {
+        List<Category> rootCategories = repo.findRootCategories();
+        rootCategories.forEach(x -> System.out.println(x.getName()));
+    }
+
 }
