@@ -61,30 +61,17 @@
             <tr th:each="user : ${listUsers}">
                 <td class="hideable-column">[[${user.id}]]</td>
                 <td>
-                    <span th:if="${user.photos == null}"
-                          class="fas fa-portrait fa-6x icon-silver"></span>
-                    <img th:if="${user.photos != null}"
-                         th:src="@{${user.photosImagePath}}"
-                         style="width: 80px"
-                         alt="">
+                    <div th:replace="fragments :: user_photos"></div>
                 </td>
                 <td class="hideable-column">[[${user.email}]]</td>
                 <td>[[${user.firstName}]]</td>
                 <td>[[${user.lastName}]]</td>
                 <td>[[${user.roles}]]</td>
                 <td>
-                    <a th:if="${user.enabled == true}"
-                       class="fas fa-check-circle fa-2x icon-green"
-                       th:href="@{'/users/' + ${user.id} + '/enabled/false'}"
-                       title="Disable this user"></a>
-                    <a th:if="${user.enabled == false}"
-                       class="fas fa-check-circle fa-2x icon-dark"
-                       th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
-                       title="Enabled this user"></a>
+                    <div th:replace="fragments :: status(${user.enabled}, 'user', '/users/' + ${user.id})"></div>
                 </td>
                 <td>
-                    <a class="fas fa-edit fa-2x icon-green"
-                       th:href="@{'/users/edit/' + ${user.id}}"></a>
+                    <div th:replace="fragments :: edit('user', '/users/edit/' + ${user.id})"></div>
                     &nbsp;
                     <a class="fas fa-trash fa-2x icon-dark link-delete"
                        th:href="@{'/users/delete/' + ${user.id}}"
@@ -120,6 +107,7 @@
                    th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
                    title="Enabled this user"></a>
                 &nbsp;
+
                 <a class="fas fa-edit fa-2x icon-green"
                    th:href="@{'/users/edit/' + ${user.id}}"></a>
                 &nbsp;

@@ -41,8 +41,42 @@
                     </a>
 
 
+    <!-- footer -->
     <div th:fragment="footer" class="text-center m-3">
         <p>Shopme Control Panel - Copyright &copy; Shopme</p>
     </div>
+
+    <!-- enabled -->
+    <div th:fragment="status(enabled, entityName, entityURL)" th:remove="tag">
+        <a th:if="${enabled == true}" class="fas fa-check-circle fa-2x icon-green"
+           th:href="@{${entityURL} + '/enabled/false'}"
+           th:title="'Disable this ' + ${entityName}"
+        ></a>
+
+        <a th:if="${enabled == false}" class="fas fa-circle fa-2x icon-dark"
+           th:href="@{${entityURL} + '/enabled/true'}"
+           th:title="'Enable this ' + ${entityName}"
+        ></a>
+    </div>
+
+    <!-- photo -->
+    <div th:fragment="user_photos" th:remove="tag">
+        <span th:if="${user.photos == null}"
+              class="fas fa-portrait fa-6x icon-silver"></span>
+        <img th:if="${user.photos != null}"
+             th:src="@{${user.photosImagePath}}"
+             style="width: 80px"
+             alt="">
+    </div>
+    <!-- edit -->
+    <div th:fragment="edit(entityName, entityURL)" th:remove="tag">
+        <a class="fas fa-edit fa-2x icon-green"
+           th:href="@{${entityURL}}"
+           th:title="'Edit this' + ${entityName}">
+        </a>
+    </div>
+
+    <!-- delete -->
+
 </body>
 </html>
