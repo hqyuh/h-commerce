@@ -73,9 +73,7 @@
                 <td>
                     <div th:replace="fragments :: edit('user', '/users/edit/' + ${user.id})"></div>
                     &nbsp;
-                    <a class="fas fa-trash fa-2x icon-dark link-delete"
-                       th:href="@{'/users/delete/' + ${user.id}}"
-                       th:userID="${user.id}"></a>
+                    <div th:replace="fragments :: delete('user', '/users/delete/' + ${user.id}, ${user.id})"></div>
                 </td>
             </tr>
             </tbody>
