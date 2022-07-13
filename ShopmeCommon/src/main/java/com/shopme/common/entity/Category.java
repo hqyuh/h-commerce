@@ -83,6 +83,12 @@ public class Category {
         return copyCategory;
     }
 
+    public Category(Integer id, String name, String alias) {
+        this.id = id;
+        this.name = name;
+        this.alias = alias;
+    }
+
     @Transient
     public String getImagePath() {
         if (this.id == null)

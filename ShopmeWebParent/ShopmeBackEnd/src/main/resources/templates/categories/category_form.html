@@ -17,6 +17,7 @@
           method="post"
           style="max-width: 500px; margin: 0 auto"
           th:object="${category}"
+          onsubmit="return checkUnique(this)"
           enctype="multipart/form-data"> <!-- up image -->
         <input type="hidden" th:field="*{id}">
     <div class="border border-secondary rounded p-3">
@@ -123,6 +124,29 @@
     <script type="application/javascript">
 
         const moduleURL = '[[@{/categories}]]';
+
+        const checkUnique = (form) => {
+            const catId = $("#id").val();
+            const catName = $("#name").val();
+            const catAlias = $("#alias").val();
+            const csrfValue = $("input[name='_csrf']").val();
+            const url = '[[@{/categories/check_unique}]]';
+
+            const params = {
+                id: catId,
+                name: catName,
+                alias: catAlias,
+                _csrf: csrfValue
+            };
+
+            $.post(url, params, (response) => {
+                alert(response);
+            }).fail(() => {
+                alert('Failed');
+            });
+
+            return false;
+        }
         
     </script>
 

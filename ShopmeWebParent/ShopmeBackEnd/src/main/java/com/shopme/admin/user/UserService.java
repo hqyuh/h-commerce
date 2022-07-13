@@ -19,7 +19,7 @@ import java.util.Objects;
 @Transactional
 public class UserService {
 
-    public static final int USERS_PER_PAGE = 3;
+    public static final int USERS_PER_PAGE = 5;
 
     private final UserRepository userRepo;
     private final RoleRepository roleRepo;

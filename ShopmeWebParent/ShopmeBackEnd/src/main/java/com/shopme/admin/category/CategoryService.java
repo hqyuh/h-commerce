@@ -114,4 +114,40 @@ public class CategoryService {
         }
     }
 
+    /***
+     * check unique category
+     *
+     * @param id
+     * @param name
+     * @param alias
+     * @return
+     */
+    public String checkUnique(Integer id,
+                              String name,
+                              String alias) {
+        boolean isCreatingNew = (id == null || id == 0);
+
+        Category categoryByName = categoryRepo.findByName(name);
+
+        if (isCreatingNew) {
+            if (categoryByName != null) {
+                return "DuplicateName";
+            } else {
+                Category categoryByAlias = categoryRepo.findByAlias(alias);
+                if (categoryByAlias != null) {
+                    return "DuplicateAlias";
+                }
+            }
+        } else {
+            if (categoryByName != null && !categoryByName.getId().equals(id)) {
+                return "DuplicateName";
+            }
+            Category categoryByAlias = categoryRepo.findByAlias(alias);
+            if (categoryByAlias != null && !categoryByAlias.getId().equals(id)) {
+                return "DuplicateAlias";
+            }
+        }
+        return "OK";
+    }
+
 }
