@@ -101,24 +101,7 @@
     </div>
     </form>
     
-    <!-- dialog -->
-    <div class="modal fade text-center" id="modalDialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="modalTitle">Warning</h4>
-                    <button type="button" class="close" data-dimiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <span id="modalBody"></span>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dimiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <div th:replace="modal_fragments :: modal_dialog"></div>
 
     <!-- javascript -->
     <script type="application/javascript">
@@ -140,9 +123,17 @@
             };
 
             $.post(url, params, (response) => {
-                alert(response);
+                if (response === 'OK') {
+                    form.submit();
+                } else if (response === 'DuplicateName') {
+                    showWarningModal('There is another category having same name ' + catName);
+                } else if (response === 'DuplicateAlias') {
+                    showWarningModal('There is another category having same alias ' + catAlias);
+                } else {
+                    showErrorModal('Unknown response from server');
+                }
             }).fail(() => {
-                alert('Failed');
+                showErrorModal('Could not connect to the server');
             });
 
             return false;

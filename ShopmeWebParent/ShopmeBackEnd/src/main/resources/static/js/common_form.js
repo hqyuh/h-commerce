@@ -37,3 +37,11 @@ const showModalDialog = (title, message) => {
     // show dialog
     $('#modalDialog').modal();
 }
+
+const showErrorModal = (message) => {
+    showModalDialog('Error', message);
+}
+
+const showWarningModal = (message) => {
+    showModalDialog('Warning', message);
+}
