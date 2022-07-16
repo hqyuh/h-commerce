@@ -12,6 +12,7 @@
         <language minSize="56" name="Java" />
       </Languages>
     </inspection_tool>
+    <inspection_tool class="EqualsBetweenInconvertibleTypes" enabled="true" level="INFORMATION" enabled_by_default="true" />
     <inspection_tool class="HtmlFormInputWithoutLabel" enabled="true" level="INFORMATION" enabled_by_default="true" />
     <inspection_tool class="HtmlRequiredTitleElement" enabled="false" level="WARNING" enabled_by_default="false" />
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
