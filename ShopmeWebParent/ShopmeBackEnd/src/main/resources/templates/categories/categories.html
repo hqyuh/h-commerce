@@ -61,16 +61,7 @@
                 <td>[[${cat.name}]]</td>
                 <td>[[${cat.alias}]]</td>
                 <td>
-                    <a th:if="${cat.enabled == true}"
-                       class="fas fa-check-circle fa-2x icon-green"
-                       href=""
-                       title="Disable this item">
-                    </a>
-                    <a th:if="${cat.enabled == false}"
-                       class="fas fa-check-circle fa-2x icon-dark"
-                       href=""
-                       title="Enabled this item">
-                    </a>
+                    <div th:replace="fragments :: category_status"></div>
                 </td>
                 <td>
                     <!-- edit -->

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.util.List;
 
@@ -88,6 +89,19 @@ public class CategoryController {
             redirectAttributes.addAttribute("message", ex.getMessage());
             return "redirect:/categories";
         }
+    }
+
+    @GetMapping("/categories/{id}/enabled/{status}")
+    public String updateCategoryEnabledStatus(@PathVariable("id") Integer id,
+                                              @PathVariable("status") boolean enabled,
+                                              RedirectAttributes redirectAttributes) {
+        categoryService.updateCategoryEnabledStatus(id, enabled);
+        String status = enabled ? "enabled" : "disabled";
+        String message = "The category ID " + id + " has been " + status;
+
+        redirectAttributes.addFlashAttribute("message", message);
+
+        return "redirect:/categories";
     }
 
 }
