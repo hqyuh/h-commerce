@@ -80,8 +80,42 @@
     <div th:fragment="delete(entityName, deleteURL, entityID)" th:remove="tag">
         <a class="fas fa-trash fa-2x icon-dark link-delete"
            th:href="@{${deleteURL}}"
-           th:userID="${entityID}" th:title="'Delete this ' + ${entityName}">
+           th:entityId="${entityID}" th:title="'Delete this ' + ${entityName}"
+        >
         </a>
+    </div>
+
+    <!-- paging -->
+    <div th:fragment="pagination(entityName)" th:remove="tag">
+        <div class="text-center m-1" th:if="${totalItems > 0}">
+            <span>Showing user # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
+        </div>
+        <div class="text-center m-1" th:unless="${totalItems > 0}">
+            <span>No [[${entityName}]] found</span>
+        </div>
+
+        <div>
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                        <a th:replace="fragments :: page_link(1, 'First')"></a>
+                    </li>
+                    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                        <a th:replace="fragments :: page_link(${currentPage - 1}, 'Previous')"></a>
+                    </li>
+                    <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+                        th:each="i : ${#numbers.sequence(1, totalPages)}">
+                        <a th:replace="fragments :: page_link(${i}, ${i})"></a>
+                    </li>
+                    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                        <a th:replace="fragments :: page_link(${currentPage + 1}, 'Next')"></a>
+                    </li>
+                    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                        <a th:replace="fragments :: page_link(${totalPages}, 'Last')"></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 
 
@@ -97,6 +131,21 @@
            class="fas fa-check-circle fa-2x icon-dark"
            title="Enabled this category"
         ></a>
+    </div>
+
+    <div th:fragment="category_actions" th:remove="tag">
+        <a th:href="@{'/categories/edit/' + ${cat.id}}"
+           class="fas fa-edit fa-2x icon-green"
+           title="Edit this category"
+        ></a>
+        &nbsp;
+        <th:block th:if="${cat.hasChildren == false}">
+            <a th:href="@{'/categories/delete/' + ${cat.id}}"
+               class="fas fa-trash fa-2x icon-dark link-delete"
+               th:entityId="${cat.id}"
+               title="Delete this category"
+            ></a>
+        </th:block>
     </div>
 
 </body>

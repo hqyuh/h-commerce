@@ -27,4 +27,6 @@ public interface CategoryRepository extends PagingAndSortingRepository<Category,
     @Modifying
     void updateEnabledStatus(Integer id, boolean enabled);
 
+    Long countById(Integer id);
+
 }

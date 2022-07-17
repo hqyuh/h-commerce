@@ -62,4 +62,14 @@ public class FileUpLoadUtil {
         }
     }
 
+    public static void removeDir(String dir) {
+        clearDir(dir);
+
+        try {
+            Files.delete(Paths.get(dir));
+        } catch (IOException e) {
+            LOGGER.error("Could not remove directory: " + dir);
+        }
+    }
+
 }

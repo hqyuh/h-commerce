@@ -195,8 +195,27 @@ public class CategoryService {
         return sortedChildren;
     }
 
+    /**
+     * Update the enabled status of a category.
+     *
+     * @param id The id of the category to update
+     * @param enabled true/false
+     */
     public void updateCategoryEnabledStatus(Integer id, boolean enabled) {
         categoryRepo.updateEnabledStatus(id, enabled);
+    }
+
+    /**
+     * If the category with the given ID doesn't exist, throw an exception. Otherwise, delete the category.
+     *
+     * @param id The ID of the category to delete.
+     */
+    public void deleteCategory(Integer id) throws CategoryNotFoundException {
+        Long countById = categoryRepo.countById(id);
+        if (countById == null || countById == 0) {
+            throw new CategoryNotFoundException("Could not find any category with ID " + id);
+        }
+        categoryRepo.deleteById(id);
     }
 
 }
