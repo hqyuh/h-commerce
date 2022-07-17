@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,16 +27,32 @@ public class CategoryController {
     }
 
     @GetMapping("/categories")
-    public String listAll(Model model,
-                          String sortDir) {
+    public String listFirstPage(Model model,
+                                String sortDir) {
+        return listByPage(1, model, sortDir);
+    }
+
+    @GetMapping("/categories/page/{pageNum}")
+    public String listByPage(@PathVariable("pageNum") int pageNum,
+                             Model model,
+                             String sortDir) {
         if (sortDir == null || sortDir.isEmpty()) {
             sortDir = "asc";
         }
 
-        List<Category> listCategories = categoryService.listAll(sortDir);
+        CategoryPageInfo pageInfo = new CategoryPageInfo();
+        List<Category> listCategories = categoryService.listByPage(pageInfo, pageNum, sortDir);
         String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+
         model.addAttribute("listCategories", listCategories);
         model.addAttribute("reverseSortDir", reverseSortDir);
+
+        model.addAttribute("totalPages", pageInfo.getTotalPages());
+        model.addAttribute("totalItems", pageInfo.getTotalElements());
+        model.addAttribute("currentPage", pageNum);
+
+        model.addAttribute("sortField", "name");
+        model.addAttribute("sortDir", sortDir);
 
         return "categories/categories";
     }
@@ -73,7 +88,7 @@ public class CategoryController {
     }
 
     @GetMapping("categories/edit/{id}")
-    public String updateCategory(@PathVariable(name = "id") Integer id,
+    public String updateCategory(@PathVariable("id") Integer id,
                                  Model model,
                                  RedirectAttributes redirectAttributes) {
         try {

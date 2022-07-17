@@ -41,7 +41,7 @@
                         Category Image
                     </th>
                     <th>
-                        <a th:href="@{'categories?sortDir=' + ${reverseSortDir}}"
+                        <a th:href="@{'/categories/page/' + ${currentPage} + '?sortDir=' + ${reverseSortDir}}"
                            class="text-white">
                             Category Name
                         </a>
@@ -70,6 +70,9 @@
             </tbody>
         </table>
     </div>
+
+    <!-- paging -->
+    <div th:replace="fragments :: pagination('/categories', 'categories')"></div>
 
     <!-- dialog -->
     <div th:replace="modal_fragments :: confirm_modal"></div>
